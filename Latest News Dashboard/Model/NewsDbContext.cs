@@ -7,7 +7,7 @@ namespace Latest_News_Dashboard.Model
     {
         public NewsDbContext(DbContextOptions<NewsDbContext> options)
         : base(options) { }
-        public DbSet<Article> NewsArticles { get; set; }
+        public DbSet<KeyedArticle> Articles { get; set; }
         public DbSet<Source> Sources { get; set; }
 
     }
