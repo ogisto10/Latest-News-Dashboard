@@ -4,6 +4,6 @@
     {
         public string Status { get; set; }
         public int TotalResults { get; set; }
-        public IEnumerable<NewsArticleDTO> Articles { get; set; }
+        public IEnumerable<ArticleDto> Articles { get; set; }
     }
 }

@@ -2,6 +2,6 @@
 {
     public class NewsApiOptions
     {
-        public string Url { get; set; }
+        public string ApiKey { get; set; }
     }
 }

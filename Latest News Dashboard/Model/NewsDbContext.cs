@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NewsAPI.Models;
 
 namespace Latest_News_Dashboard.Model
 {
@@ -6,7 +7,7 @@ namespace Latest_News_Dashboard.Model
     {
         public NewsDbContext(DbContextOptions<NewsDbContext> options)
         : base(options) { }
-        public DbSet<NewsArticle> NewsArticles { get; set; }
+        public DbSet<Article> NewsArticles { get; set; }
         public DbSet<Source> Sources { get; set; }
 
     }
