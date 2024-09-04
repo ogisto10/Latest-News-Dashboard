@@ -17,7 +17,7 @@ namespace Latest_News_Dashboard.Service
         private readonly NewsApiClient _newsApiClient;
         private readonly NewsDbContext _context;
         private readonly IOptions<NewsApiOptions> _newsApiOptions;
-        public NewsService(HttpClient httpClient, NewsDbContext context, IOptions<NewsApiOptions> newsApiOptions)
+        public NewsService(NewsDbContext context, IOptions<NewsApiOptions> newsApiOptions)
         {
            
             _context = context;
@@ -43,8 +43,16 @@ namespace Latest_News_Dashboard.Service
                 return null;
         }
 
-        public async Task UpdateNewsAsync()
+        public async Task UpdateYesterdayNews(string q)
         {
+            //fetch the news of yesterday
+            var news = await FetchLatestNewsAsync(q, DateTime.Today.AddDays(-1), DateTime.Today.AddDays(-1));
+            //save results in the db
+            if (news != null && news.Any())
+            {
+                await _context.AddRangeAsync(news);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

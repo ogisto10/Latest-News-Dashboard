@@ -13,20 +13,6 @@ namespace Latest_News_Dashboard.Controller
         {
             _newsService = newsService;
         }
-
-        [HttpGet("GetLatestNews")]
-        public async Task<IActionResult> GetLatestNews(string q, DateTime from, DateTime to)
-        {
-            var news = await _newsService.FetchLatestNewsAsync(q,from,to);
-            return Ok(news);
-        }
-
-        [HttpPost("UpdateNews")]
-        public async Task<IActionResult> UpdateNews()
-        {
-            await _newsService.UpdateNewsAsync();
-            return NoContent();
-        }
     }
 }
 
