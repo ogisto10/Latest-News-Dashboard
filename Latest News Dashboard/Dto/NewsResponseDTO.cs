@@ -2,8 +2,9 @@
 {
     public class NewsResponseDTO
     {
-        public string Status { get; set; }
-        public int TotalResults { get; set; }
-        public IEnumerable<ArticleDto> Articles { get; set; }
+        public int PageSize { get; set; } = 50;
+        public int PageNumber { get; set; }
+        public int Total { get; set; }
+        public IEnumerable<ArticleDto> Articles { get; set; } = new List<ArticleDto>();
     }
 }
