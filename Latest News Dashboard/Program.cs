@@ -1,3 +1,4 @@
+using Latest_News_Dashboard.DailyBackgroundService;
 using Latest_News_Dashboard.Model;
 using Latest_News_Dashboard.Options;
 using Latest_News_Dashboard.Service;
@@ -10,14 +11,13 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<NewsDbContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddOptions<NewsApiOptions>().BindConfiguration("NewsApi");
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddHttpClient<NewsAPIService>();
 builder.Services.AddControllers();
 builder.Services.AddScoped<INewsAPIService, NewsAPIService>();
 builder.Services.AddScoped<IMyNewsService, MyNewsService>();
 builder.Services.AddSwaggerGen(c => {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Latest News API", Version = "v1" });
 });
-
+builder.Services.AddHostedService<DailyUpdateService>();
 
 var app = builder.Build();
 
