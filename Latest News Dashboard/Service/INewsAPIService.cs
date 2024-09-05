@@ -2,7 +2,7 @@
 
 namespace Latest_News_Dashboard.Service
 {
-    public interface INewsService
+    public interface INewsAPIService
     {
         Task<IEnumerable<ArticleDto>> FetchLatestNewsAsync(string q, DateTime from, DateTime to);
         Task UpdateYesterdayNews(string q);

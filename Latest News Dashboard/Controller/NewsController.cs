@@ -8,8 +8,8 @@ namespace Latest_News_Dashboard.Controller
     [ApiController]
     public class NewsController : ControllerBase
     {
-        private readonly INewsService _newsService;
-        public NewsController(INewsService newsService)
+        private readonly INewsAPIService _newsService;
+        public NewsController(INewsAPIService newsService)
         {
             _newsService = newsService;
         }

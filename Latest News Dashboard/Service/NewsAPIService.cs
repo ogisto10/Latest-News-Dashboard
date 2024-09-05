@@ -12,12 +12,12 @@ using NewsAPI.Constants;
 
 namespace Latest_News_Dashboard.Service
 {
-    public class NewsService : INewsService
+    public class NewsAPIService : INewsAPIService
     {
         private readonly NewsApiClient _newsApiClient;
         private readonly NewsDbContext _context;
         private readonly IOptions<NewsApiOptions> _newsApiOptions;
-        public NewsService(NewsDbContext context, IOptions<NewsApiOptions> newsApiOptions)
+        public NewsAPIService(NewsDbContext context, IOptions<NewsApiOptions> newsApiOptions)
         {
            
             _context = context;
@@ -50,8 +50,30 @@ namespace Latest_News_Dashboard.Service
             //save results in the db
             if (news != null && news.Any())
             {
-                await _context.AddRangeAsync(news);
-                await _context.SaveChangesAsync();
+                var existingSources =await  _context.Sources.ToListAsync();
+                var sources = news.Select(article => new Source { Name = article.Source.Name, Id = article.Source.Name })
+                    .Except(existingSources)
+                    .DistinctBy(s=>s.Name);
+                await _context.Sources.AddRangeAsync(sources);
+                var articles = news.Select(article => new KeyedArticle
+                {
+                    Title = article.Title,
+                    Content = article.Content,
+                    Author = article.Author,
+                    Description = article.Description,
+                    Url = article.Url,
+                    UrlToImage = article.UrlToImage,
+                    PublishedAt = article.PublishedAt,
+                    SourceId = article.Source.Name
+                });
+                try
+                {
+                    await _context.Articles.AddRangeAsync(articles);
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception ex) {
+                    throw;
+                }
             }
         }
     }

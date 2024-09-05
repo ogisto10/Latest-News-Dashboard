@@ -10,9 +10,9 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<NewsDbContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddOptions<NewsApiOptions>().BindConfiguration("NewsApi");
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddHttpClient<NewsService>();
+builder.Services.AddHttpClient<NewsAPIService>();
 builder.Services.AddControllers();
-builder.Services.AddScoped<INewsService, NewsService>();
+builder.Services.AddScoped<INewsAPIService, NewsAPIService>();
 builder.Services.AddSwaggerGen(c => {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Latest News API", Version = "v1" });
 });
