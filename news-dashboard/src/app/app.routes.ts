@@ -1,6 +1,10 @@
 import { Routes } from '@angular/router';
-import { NewsListComponent } from './news-list/news-list.component';
+
 
 export const routes: Routes = [
-  { path: '', component: NewsListComponent }
+  {
+    path: '',
+    loadChildren: () => import('./module-news/module-news.module').then(m => m.ModuleNewsModule)
+  }
+
 ];

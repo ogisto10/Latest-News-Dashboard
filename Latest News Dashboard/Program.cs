@@ -18,6 +18,17 @@ builder.Services.AddSwaggerGen(c => {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Latest News API", Version = "v1" });
 });
 builder.Services.AddHostedService<DailyUpdateService>();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngularApp",
+        builder =>
+        {
+            builder.WithOrigins("http://localhost:4200")
+                   .AllowAnyHeader()
+                   .AllowAnyMethod();
+        });
+});
+
 
 var app = builder.Build();
 
@@ -33,7 +44,8 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-
+app.UseCors("AllowAngularApp");
+app.UseHttpsRedirection();
 app.UseRouting();
 app.UseAuthorization();
 app.MapControllers();

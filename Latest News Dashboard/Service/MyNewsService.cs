@@ -90,9 +90,8 @@ namespace Latest_News_Dashboard.Service
         }
         public async Task<List<Source>> GetAllSourcesAsync()
         {
-            var sources = await _context.Articles
-                                .Select(article => article.Source)
-                                .Distinct()
+            //To be cached for performance sake and to lighten the database load
+            var sources = await _context.Sources 
                                 .ToListAsync();
             return sources;
         }

@@ -1,5 +1,6 @@
 ﻿using Latest_News_Dashboard.Dto;
 using Latest_News_Dashboard.Service;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NewsAPI.Models;

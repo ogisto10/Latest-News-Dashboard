@@ -1,31 +1,24 @@
-import { Component } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NewsService } from '../../Service/news-service.service';
 
 @Component({
   selector: 'app-news',
-  standalone: true,
-  imports: [],
   templateUrl: './news.component.html',
-  styleUrl: './news.component.css'
+  styleUrls: ['./news.component.css']
 })
-export class NewsComponent {
-  newsResponse: any;
-  sources: any[] = [];
-  searchForm!: FormGroup;
-  pageNumber = 1;
-  pageSize = 50;
+export class NewsComponent implements OnInit {
 
-  constructor(private newsService: NewsService, private fb: FormBuilder) {}
+  newsResponse: any;
+  pageNumber = 2;
+  pageSize = 50;
+  searchQuery = '';
+  selectedSource = '';
+
+  constructor(private newsService: NewsService) {}
 
   ngOnInit(): void {
     this.loadNews();
-    this.newsService.getAllSources().subscribe(sources => this.sources = sources);
-
-    this.searchForm = this.fb.group({
-      searchQuery: [''],
-      sourceName: ['']
-    });
   }
 
   loadNews() {
@@ -33,22 +26,17 @@ export class NewsComponent {
       .subscribe(response => this.newsResponse = response);
   }
 
-  searchArticles() {
-    const { searchQuery } = this.searchForm.value;
-    this.newsService.searchArticles(this.pageNumber, this.pageSize, searchQuery)
-      .subscribe(response => this.newsResponse = response);
-  }
-
-  filterArticles() {
-    const { sourceName } = this.searchForm.value;
-    this.newsService.filterArticles(this.pageNumber, this.pageSize, sourceName)
-      .subscribe(response => this.newsResponse = response);
-  }
-
-  onPageChange(newPage: number) {
-    this.pageNumber = newPage;
+  onSearch(searchQuery: string) {
+    this.searchQuery = searchQuery;
+    this.pageNumber = 1;
     this.loadNews();
   }
+
+  onFilter(sourceName: string) {
+    this.selectedSource = sourceName;
+    this.pageNumber = 1;
+    this.loadNews();
+  }
+
+
 }
-
-

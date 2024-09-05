@@ -10,5 +10,6 @@ namespace Latest_News_Dashboard.Model
         public DbSet<KeyedArticle> Articles { get; set; }
         public DbSet<Source> Sources { get; set; }
 
+
     }
 }

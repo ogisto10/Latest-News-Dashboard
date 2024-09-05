@@ -45,16 +45,17 @@ namespace Latest_News_Dashboard.Service
 
         public async Task UpdateYesterdayNews(string q)
         {
-            //fetch the news of yesterday
             var news = await FetchLatestNewsAsync(q, DateTime.Today.AddDays(-1), DateTime.Today.AddDays(-1));
-            //save results in the db
             if (news != null && news.Any())
             {
-                var existingSources =await  _context.Sources.ToListAsync();
-                var sources = news.Select(article => new Source { Name = article.Source.Name, Id = article.Source.Name })
-                    .Except(existingSources)
+                try
+                {
+
+                    var existingSources =await  _context.Sources.Select(s=>s.Id).ToListAsync();
+                    var sources = news.Select(article => new Source { Name = article.Source.Name, Id = article.Source.Name })
+                    .ExceptBy(existingSources,s=>s.Id)
                     .DistinctBy(s=>s.Name);
-                await _context.Sources.AddRangeAsync(sources);
+                    await _context.Sources.AddRangeAsync(sources);
                 var articles = news.Select(article => new KeyedArticle
                 {
                     Title = article.Title,
@@ -66,9 +67,7 @@ namespace Latest_News_Dashboard.Service
                     PublishedAt = article.PublishedAt,
                     SourceId = article.Source.Name
                 });
-                try
-                {
-                    await _context.Articles.AddRangeAsync(articles);
+  await _context.Articles.AddRangeAsync(articles);
                     await _context.SaveChangesAsync();
                 }
                 catch (Exception ex) {
