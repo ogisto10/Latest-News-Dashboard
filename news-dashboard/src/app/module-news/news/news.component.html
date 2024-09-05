@@ -1,0 +1,35 @@
+<div class="container mx-auto p-6">
+  <form [formGroup]="searchForm" (ngSubmit)="searchArticles()" class="mb-4">
+    <div class="flex space-x-4">
+      <input formControlName="searchQuery" type="text" placeholder="Search..." class="input input-bordered w-full" />
+
+      <select formControlName="sourceName" class="input input-bordered w-full">
+        <option value="">All Sources</option>
+        <option *ngFor="let source of sources" [value]="source.name">{{ source.name }}</option>
+      </select>
+
+      <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+  </form>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="news-container">
+      <div *ngFor="let article of newsResponse?.articles" class="card">
+        <h3>{{ article.title }}</h3>
+        <p>{{ article.description }}</p>
+        <a [href]="article.url" target="_blank">Read More</a>
+      </div>
+    </div>
+  </div>
+  <div class="mt-6 flex justify-center">
+    <button (click)="onPageChange(pageNumber - 1)" [disabled]="pageNumber === 1" class="btn btn-secondary">
+      Previous
+    </button>
+    <span class="mx-4">Page {{ pageNumber }}</span>
+    <button (click)="onPageChange(pageNumber + 1)" [disabled]="!newsResponse.hasMorePages" class="btn btn-secondary">
+      Next
+    </button>
+  </div>
+</div>
+
+
