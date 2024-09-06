@@ -24,7 +24,7 @@ namespace Latest_News_Dashboard.Service
             {
                 sources = await _context.Sources.ToListAsync();
                 var cacheOptions = new MemoryCacheEntryOptions()
-                    .SetAbsoluteExpiration(TimeSpan.FromHours(1));
+                    .SetAbsoluteExpiration(TimeSpan.FromDays(1));
                 _cache.Set(CacheKey, sources, cacheOptions);
             }
 
