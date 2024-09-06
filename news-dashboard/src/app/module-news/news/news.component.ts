@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { NewsService } from '../../Service/news-service.service';
 
 @Component({
@@ -7,13 +6,13 @@ import { NewsService } from '../../Service/news-service.service';
   templateUrl: './news.component.html',
   styleUrls: ['./news.component.css']
 })
-export class NewsComponent implements OnInit {
+export class NewsComponent implements OnInit, OnChanges {
+  @Input() searchQuery: string = '';
+  @Input() selectedSource: string = '';
 
   newsResponse: any;
-  pageNumber = 2;
+  pageNumber = 1;
   pageSize = 50;
-  searchQuery = '';
-  selectedSource = '';
 
   constructor(private newsService: NewsService) {}
 
@@ -21,22 +20,45 @@ export class NewsComponent implements OnInit {
     this.loadNews();
   }
 
-  loadNews() {
+  ngOnChanges(): void {
+    this.pageNumber = 1;
+    this.loadNews();
+  }
+
+  loadNews(): void {
+    if (this.searchQuery) {
+      this.loadSearchResults();
+    } else if (this.selectedSource) {
+      this.loadFilterResults();
+    } else {
+      this.loadPagedArticles();
+    }
+  }
+
+  loadPagedArticles(): void {
     this.newsService.getPagedArticles(this.pageNumber, this.pageSize)
       .subscribe(response => this.newsResponse = response);
   }
 
-  onSearch(searchQuery: string) {
-    this.searchQuery = searchQuery;
-    this.pageNumber = 1;
+  loadSearchResults(): void {
+    this.newsService.searchArticles(this.pageNumber, this.pageSize, this.searchQuery)
+      .subscribe(response => this.newsResponse = response);
+  }
+
+  loadFilterResults(): void {
+    this.newsService.filterArticles(this.pageNumber, this.pageSize, this.selectedSource)
+      .subscribe(response => this.newsResponse = response);
+  }
+
+  nextPage(): void {
+    this.pageNumber += 1;
     this.loadNews();
   }
 
-  onFilter(sourceName: string) {
-    this.selectedSource = sourceName;
-    this.pageNumber = 1;
-    this.loadNews();
+  previousPage(): void {
+    if (this.pageNumber > 1) {
+      this.pageNumber -= 1;
+      this.loadNews();
+    }
   }
-
-
 }

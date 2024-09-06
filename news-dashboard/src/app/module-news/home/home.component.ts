@@ -6,6 +6,14 @@ import { Component } from '@angular/core';
  styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
+  searchQuery: string = '';
+  selectedSource: string='';
 
+  onSearch(query: string): void {
+    this.searchQuery = query;
+  }
+  onfilter(sourceName: string):void{
+    this.selectedSource =sourceName;
+  }
 
 }

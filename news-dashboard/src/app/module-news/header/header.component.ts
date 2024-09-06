@@ -26,7 +26,16 @@ export class HeaderComponent  implements OnInit {
       this.sources = sources;
     });
   }
+  onSearch(): void {
+    const searchQuery = this.searchForm.get('searchQuery')?.value || '';
+    this.search.emit(searchQuery);
+  }
 
+
+  onFilter(): void {
+    const sourceName = this.searchForm.get('sourceName')?.value || '';
+    this.filter.emit(sourceName);
+  }
 
 
 
