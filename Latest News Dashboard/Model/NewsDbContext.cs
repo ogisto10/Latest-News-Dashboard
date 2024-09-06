@@ -9,6 +9,15 @@ namespace Latest_News_Dashboard.Model
         : base(options) { }
         public DbSet<KeyedArticle> Articles { get; set; }
         public DbSet<Source> Sources { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+        
+            modelBuilder.Entity<KeyedArticle>()
+                .HasIndex(a => a.Author)
+                .HasDatabaseName("IX_Author");
+
+            base.OnModelCreating(modelBuilder);
+        }
 
 
     }
