@@ -12,8 +12,11 @@ builder.Services.AddDbContext<NewsDbContext>(options => options.UseSqlServer(con
 builder.Services.AddOptions<NewsApiOptions>().BindConfiguration("NewsApi");
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers();
+// Add InMemory caching
+builder.Services.AddMemoryCache();
 builder.Services.AddScoped<INewsAPIService, NewsAPIService>();
 builder.Services.AddScoped<IMyNewsService, MyNewsService>();
+builder.Services.AddScoped<ISourceCacheService, SourceCacheService>();
 builder.Services.AddSwaggerGen(c => {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Latest News API", Version = "v1" });
 });
