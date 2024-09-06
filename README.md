@@ -1,3 +1,8 @@
+![Screenshot_6-9-2024_183415_localhost](https://github.com/user-attachments/assets/280eb2ea-becc-4004-8166-920dd1c42890)
+![Screenshot_6-9-2024_183431_localhost](https://github.com/user-attachments/assets/6a96a780-4340-4eda-a93e-cecc3390be58)
+![Screenshot_6-9-2024_183457_localhost](https://github.com/user-attachments/assets/98858bf2-5dbd-4969-b52f-e822123f1c12)
+![Screenshot_6-9-2024_183514_localhost](https://github.com/user-attachments/assets/d3e4d49c-a339-4214-bada-892234449547)
+![Screenshot_6-9-2024_153746_localhost](https://github.com/user-attachments/assets/e2c7009c-2f21-494e-afb5-ed756a32cf24)
 # Latest News Dashboard
 
 ## Overview
