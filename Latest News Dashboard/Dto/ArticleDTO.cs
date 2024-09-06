@@ -14,7 +14,7 @@ namespace Latest_News_Dashboard.Dto
             Url = article.Url;
             UrlToImage = article.UrlToImage;
             PublishedAt = article.PublishedAt;
-            SourceName = article.Source.Name;
+            Source = article.Source;
         }
         public string Title { get; set; }
         public string Author { get; set; }
@@ -23,7 +23,7 @@ namespace Latest_News_Dashboard.Dto
         public string UrlToImage { get; set; }
         public string Content { get; set; } 
         public DateTime? PublishedAt { get; set; }
-        public  string SourceName { get; set; }
+        public  Source Source { get; set; }
     }
 
 }
