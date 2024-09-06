@@ -13,6 +13,7 @@ namespace Latest_News_Dashboard.Service
         {
             _context = context;
         }
+        // Method to get paginated articles from the database
         public async Task<NewsResponseDTO> GetPagedArticlesAsync(int pageNumber, int pageSize)
         {
             var totalArticles = await _context.Articles.CountAsync();
@@ -29,10 +30,12 @@ namespace Latest_News_Dashboard.Service
                 Articles = articles
             };
         }
+        // Method to search for articles by a query with pagination support
         public async Task<NewsResponseDTO> SearchArticlesAsync(int pageNumber, int pageSize, string? searchQuery = null)
         {
             
             var query = _context.Articles.AsQueryable();
+            // If a search query is provided, filter articles by (title,author,description,or content)
             if (!string.IsNullOrEmpty(searchQuery))
             {
                 query = query.Where(article =>
@@ -62,7 +65,7 @@ namespace Latest_News_Dashboard.Service
                 Articles = articles
             };
         }
-
+        // Method to filter articles by source name with pagination support
         public async Task<NewsResponseDTO> FilterArticlesAsync(int pageNumber, int pageSize, string? sourceName = null)
         {
             var query = _context.Articles.AsQueryable();
@@ -88,6 +91,7 @@ namespace Latest_News_Dashboard.Service
             };
 
         }
+        // Method to get all unique news sources from the database
         public async Task<List<Source>> GetAllSourcesAsync()
         {
             //To be cached for performance sake and to lighten the database load

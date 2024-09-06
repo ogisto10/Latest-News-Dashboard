@@ -18,7 +18,7 @@ namespace Latest_News_Dashboard.DailyBackgroundService
             _logger = logger;
             _serviceScopeFactory = serviceScopeFactory;
         }
-
+        // This method runs when the service starts and continues executing periodically
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             var interval = TimeSpan.FromDays(1);
@@ -28,6 +28,7 @@ namespace Latest_News_Dashboard.DailyBackgroundService
             {
                 try
                 {
+                    // Create a new service scope for fetching the necessary services
                     using (var scope = _serviceScopeFactory.CreateScope())
                     {
                         var newsAPIService = scope.ServiceProvider.GetRequiredService<INewsAPIService>();
